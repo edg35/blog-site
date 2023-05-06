@@ -1,0 +1,14 @@
+{
+    "emmet.preferences": {},
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    },
+    "editor.formatOnSave": true,
+    "[css]": {
+        "editor.suggest.insertMode": "replace"
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true,
+        "source.sortImports": true,
+    }
+}
