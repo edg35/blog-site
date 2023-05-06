@@ -38,14 +38,22 @@ app.post('/api/articles/:name/comments', (req, res) => {
 
 });
 
-app.put('/api/articles/:name/upvote', (req, res) => {
+app.put('/api/articles/:name/upvote', async (req, res) => {
+ 
   const { name } = req.params;
-  const article = articlesInfo.find(article => article.name === name);
+
+  const mongodbClient = new MongoClient('mongodb://127.0.0.1:27017');
+  await mongodbClient.connect();
+
+  const db = mongodbClient.db('react-blog-db');
+  await db.collection('articles').updateOne({ name }, {$inc: {votes: 1}});
+  const article = await db.collection('articles').findOne({ name });
+  console.log(article);
+
   if (article){
-    article.votes += 1;
     res.send(`Article ${name} upvoted: ${article.votes}!!!`);
   } else {
-    res.status(404).json({ message: 'Article not found' });
+    res.status(404).json({ message: 'Article not found!' });
   }
 });
 
