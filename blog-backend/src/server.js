@@ -34,9 +34,6 @@ app.get('/api/articles/:name', async (req, res) => {
   } else {
     res.status(404).json({ message: 'Article not found' });
   }
-
-  res.json(article);
-
 });
 
 app.post('/api/articles/:name/comments', async (req, res) => {
@@ -51,7 +48,7 @@ app.post('/api/articles/:name/comments', async (req, res) => {
   const article = await db.collection('articles').findOne({ name });
 
   if(article) {
-    res.send(article.comments);
+    res.json(article);
   } else {
     res.status(404).json({ message: 'Article not found' });
   }
@@ -70,7 +67,7 @@ app.put('/api/articles/:name/upvote', async (req, res) => {
   const article = await db.collection('articles').findOne({ name });
 
   if (article){
-    res.send(`Article ${name} upvoted: ${article.votes}!!!`);
+    res.json(article);
   } else {
     res.status(404).json({ message: 'Article not found!' });
   }
